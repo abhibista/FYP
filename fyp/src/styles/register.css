@@ -1,0 +1,35 @@
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  
+  }
+  .Register {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+        background-color: lightblue;
+      color: black;
+      padding: 40px;
+      font-family: Arial;
+      /* text-align: center; */
+  
+      
+     
+    }
+  
+    label {
+      display: block;
+      margin-block: 5px;
+    }
+  
+    input {
+      padding-block: 5px;
+      margin-block: 5px ;
+    }
+  
+    .heading {
+      margin-block: 15px;
+    } 
