@@ -47,6 +47,44 @@ public class DoctorController : ControllerBase
        return Ok(true);
 
     }    
+    [HttpPost("list-doctor")]
+    public Task<IActionResult> DoctorList(PageModel model)
+    {
+        var itemsPerPage = 15;
+        var offset = itemsPerPage * (model.PageNumber - 1);
+        var doctor = await _context.Doctors
+         .OrderByDescending(x => x.Id)
+         .ToListAsync();
+        var items = doctor
+        .Select(x => new DoctorModel
+        {
+            CreatedBy = x.CreatedBy,
+            DoctorName = x.DoctorName,
+            Email = x.Email,
+            Id = x.Id,
+            Password = x.Password,
+            Specification = x.Specification
+        })
+        .Skip(offset)
+       .Take(itemsPerPage).ToList();
+
+        if (doctor.Count < offset)
+        {
+            model.PageNumber = 1;
+            offset = 0;
+        }
+
+        return new PageResult<CollateralPageModel>
+        {
+            CurrentPage = model.PageNumber,
+            ItemPerPage = 15,
+            Items = items,
+            TotalItems = doctor.Count,
+            TotalPages = Math.Ceiling(doctor.Count.ToDecimal() / itemsPerPage).ToInt()
+        };
+
+    }
+   
 }
 
 
